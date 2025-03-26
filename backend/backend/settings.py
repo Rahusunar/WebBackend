@@ -21,12 +21,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-dxmp(yg3aqt&fk-=jr8b3i4jh_098zcvw!h@fl260@0%7=!pq0'
+# SECRET_KEY = 'django-insecure-dxmp(yg3aqt&fk-=jr8b3i4jh_098zcvw!h@fl260@0%7=!pq0'
+from decouple import config
 
+# Load SECRET_KEY from .env
+SECRET_KEY = config('SECRET_KEY')
+
+# Load DEBUG from .env (default to False if not set)
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+# Example for loading other environment variables
+# DATABASE_URL = config('DATABASE_URL')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -74,6 +82,30 @@ CORS_ALLOW_HEADERS = [
     # Add any custom headers you need
 ]
 CORS_ALLOW_CREDENTIALS = True
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'django_errors.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 
 ROOT_URLCONF = 'backend.urls'
@@ -106,6 +138,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 
 
 # Password validation

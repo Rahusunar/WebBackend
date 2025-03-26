@@ -1,0 +1,12 @@
+# Ignore virtual environment
+env/
+
+# Ignore static files (optional, if they are generated dynamically)
+backend/static/
+
+# Ignore Python cache files
+*.pyc
+__pycache__/
+
+# Ignore environment files
+.env

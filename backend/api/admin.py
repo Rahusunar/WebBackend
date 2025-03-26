@@ -14,3 +14,4 @@ admin.site.register(ServiceSection)
 admin.site.register(PortfolioSection)
 admin.site.register(BlogsSection)
 admin.site.register(ContactSection)
+
